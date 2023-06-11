@@ -1,35 +1,91 @@
-const path = require("path"); // Импортируем модуль "path" для работы с путями файлов
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const PugPlugin = require("pug-plugin");
+const path = require("path");
+const FileManagerPlugin = require("filemanager-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
 
 module.exports = {
-  entry: "./src/index.js", // Точка входа для сборки проекта
-
+  entry: path.join(__dirname, "src", "index.js"),
   output: {
-    filename: "bundle.js", // Имя выходного файла сборки
-    path: path.resolve(__dirname, "dist"), // Путь для выходного файла сборки
+    path: path.join(__dirname, "dist"),
+    filename: "index.[contenthash].js",
+    assetModuleFilename: "images/[hash][ext][query]",
   },
   module: {
     rules: [
       {
+        test: /\.js$/,
+        use: "babel-loader",
+        exclude: /node_modules/,
+      },
+      {
         test: /\.pug$/,
-        loader: PugPlugin.loader,
+        loader: "pug-loader",
+      },
+      {
+        test: /\.(scss|css)$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          "css-loader",
+          "postcss-loader",
+          "sass-loader",
+        ],
+      },
+      {
+        test: /\.(png|jpg|jpeg|gif)$/i,
+        type: "asset/resource",
+      },
+      {
+        test: /\.svg$/,
+        type: "asset/resource",
+        generator: {
+          filename: "icons/[name].[contenthash][ext]",
+        },
+      },
+      {
+        test: /\.(woff2?|eot|ttf|otf)$/i,
+        type: "asset/resource",
+        generator: {
+          filename: "fonts/[name].[contenthash][ext]",
+        },
       },
     ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./src/index.pug",
+      template: path.join(__dirname, "src", "template.pug"),
+      filename: "index.html",
     }),
-    new PugPlugin(),
+    new FileManagerPlugin({
+      events: {
+        onStart: {
+          delete: ["dist"],
+        },
+      },
+    }),
+    new MiniCssExtractPlugin({
+      filename: "[name].[contenthash].css",
+    }),
   ],
-
   devServer: {
-    static: {
-      directory: path.join(__dirname, "dist"), // Каталог для статики
-    },
-    open: true, // Автоматически открывать браузер
+    watchFiles: path.join(__dirname, "src"),
+    port: 8080,
   },
-
-  mode: "development", // Режим сборки
+  optimization: {
+    minimizer: [
+      new ImageMinimizerPlugin({
+        minimizer: {
+          implementation: ImageMinimizerPlugin.imageminMinify,
+          options: {
+            plugins: [
+              ["gifsicle", { interlaced: true }],
+              ["jpegtran", { progressive: true }],
+              ["optipng", { optimizationLevel: 5 }],
+              ["svgo", { name: "preset-default" }],
+            ],
+          },
+        },
+      }),
+    ],
+  },
 };
