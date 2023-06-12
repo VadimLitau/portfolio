@@ -1,7 +1,11 @@
-$font-size: 18px;
-$font-color: #000;
+@import "../../variables/variables.scss";
 
 .root {
+  max-width: 943px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   font-size: $font-size;
   color: $font-color;
   font-family: "Gilroy", Arial, sans-serif;

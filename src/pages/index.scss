@@ -1,4 +1,24 @@
-@import url(../vendor/css/normalize.css);
+@import url(../vendor/css/reset.css);
 
 /* root */
 @import "../blocks/root/root.scss";
+
+/* header */
+
+@import "../blocks/header/header.scss";
+
+/* menu */
+@import "../blocks/menu/menu.scss";
+@import "../blocks/menu/__list/menu__list.scss";
+@import "../blocks/menu/__list-item/menu__list-item.scss";
+@import "../blocks/menu/__list-link/menu__list-link.scss";
+@import "../blocks/menu/__list-link/_active/menu__list-link_active.scss";
+
+/* main */
+@import "../blocks/main/main.scss";
+@import "../blocks/main/__head/main__head.scss";
+@import "../blocks/main/__head-name/main__head-name.scss";
+@import "../blocks/main/__head-about/main__head-about.scss";
+@import "../blocks/main/__head-lang/main__head-lang.scss";
+@import "../blocks/main/__photo/main__photo.scss";
+@import "../blocks/main/__head-lang/_active/main__head-lang_active.scss";

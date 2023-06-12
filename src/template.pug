@@ -4,6 +4,21 @@ html(lang= 'ru')
     meta(charset='utf-8')
     title= 'Portfolio'
   body.root
-    p  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eaque sequi ex eligendi voluptatum aliquam, asperiores ducimus possimus ipsam quibusdam nisi aliquid officia et maxime pariatur incidunt quas minus, odit distinctio. 
-    
+    header.header
+      nav.menu 
+        ul.menu__list 
+          each value, key in {'#1': 'Home', '#2': 'About me', '#3': 'Skills', '#4': 'Portfolio', '#5': 'Contacts'}
+            li.menu__list-item
+              a.menu__list-link(href=key)= value
+    section.main 
+      .main__head
+        p.main__head-name Vadim Litau 
+        p.main__head-about Frontend Developer 31 years old 
+        span.main__head-langs
+          span.main__head-lang RU 
+          || 
+          span.main__head-lang.main__head-lang_active ENG
+      .main__photo 
+        img(src=require("./images/BSPP2266.png") alt="photo")
+
 //- include:markdown-it ../content/article.md 
