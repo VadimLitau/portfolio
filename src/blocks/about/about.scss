@@ -1,0 +1,18 @@
+@import "../../variables/variables.scss";
+
+.about {
+  margin-top: -4px;
+  background-color: $backLightGray;
+  width: 100vw;
+  position: absolute;
+  left: 0;
+  display: flex;
+  justify-content: center;
+
+  &__wrap {
+    padding: 60px 0 45px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}

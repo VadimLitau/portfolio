@@ -3,12 +3,10 @@
 .root {
   max-width: 943px;
   margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   font-size: $font-size;
   color: $font-color;
   font-family: "Gilroy", Arial, sans-serif;
+  overflow-x: hidden;
 }
 .logo1 {
   width: 10em;
